@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PessoaTelefoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TB_PESSOA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TB_TELEFONE" Relationship="Self.FK_tb_telefone_tb_pessoa" FromRole="TB_PESSOA" ToRole="TB_TELEFONE" />
+  </EntityType>
+  <EntityType Name="TB_TELEFONE">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id_pessoa" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TB_PESSOA" Relationship="Self.FK_tb_telefone_tb_pessoa" FromRole="TB_TELEFONE" ToRole="TB_PESSOA" />
+  </EntityType>
+  <Association Name="FK_tb_telefone_tb_pessoa">
+    <End Role="TB_PESSOA" Type="Self.TB_PESSOA" Multiplicity="1" />
+    <End Role="TB_TELEFONE" Type="Self.TB_TELEFONE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_PESSOA">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TB_TELEFONE">
+        <PropertyRef Name="id_pessoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PessoaTelefoneEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TB_PESSOA" EntityType="Self.TB_PESSOA" />
+    <EntitySet Name="TB_TELEFONE" EntityType="Self.TB_TELEFONE" />
+    <AssociationSet Name="FK_tb_telefone_tb_pessoa" Association="Self.FK_tb_telefone_tb_pessoa">
+      <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+      <End Role="TB_TELEFONE" EntitySet="TB_TELEFONE" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

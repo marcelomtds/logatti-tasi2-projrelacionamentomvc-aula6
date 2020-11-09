@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PessoaTelefoneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_PESSOA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TB_TELEFONE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numero" Type="varchar" MaxLength="50" />
+          <Property Name="tipo" Type="varchar" MaxLength="50" />
+          <Property Name="id_pessoa" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tb_telefone_tb_pessoa">
+          <End Role="TB_PESSOA" Type="Self.TB_PESSOA" Multiplicity="1" />
+          <End Role="TB_TELEFONE" Type="Self.TB_TELEFONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PESSOA">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TB_TELEFONE">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PessoaTelefoneModelStoreContainer">
+          <EntitySet Name="TB_PESSOA" EntityType="Self.TB_PESSOA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_TELEFONE" EntityType="Self.TB_TELEFONE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tb_telefone_tb_pessoa" Association="Self.FK_tb_telefone_tb_pessoa">
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+            <End Role="TB_TELEFONE" EntitySet="TB_TELEFONE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PessoaTelefoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_PESSOA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_TELEFONE" Relationship="Self.FK_tb_telefone_tb_pessoa" FromRole="TB_PESSOA" ToRole="TB_TELEFONE" />
+        </EntityType>
+        <EntityType Name="TB_TELEFONE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_pessoa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TB_PESSOA" Relationship="Self.FK_tb_telefone_tb_pessoa" FromRole="TB_TELEFONE" ToRole="TB_PESSOA" />
+        </EntityType>
+        <Association Name="FK_tb_telefone_tb_pessoa">
+          <End Role="TB_PESSOA" Type="Self.TB_PESSOA" Multiplicity="1" />
+          <End Role="TB_TELEFONE" Type="Self.TB_TELEFONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PESSOA">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TB_TELEFONE">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PessoaTelefoneEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_PESSOA" EntityType="Self.TB_PESSOA" />
+          <EntitySet Name="TB_TELEFONE" EntityType="Self.TB_TELEFONE" />
+          <AssociationSet Name="FK_tb_telefone_tb_pessoa" Association="Self.FK_tb_telefone_tb_pessoa">
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+            <End Role="TB_TELEFONE" EntitySet="TB_TELEFONE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PessoaTelefoneModelStoreContainer" CdmEntityContainer="PessoaTelefoneEntities">
+          <EntitySetMapping Name="TB_PESSOA">
+            <EntityTypeMapping TypeName="PessoaTelefoneModel.TB_PESSOA">
+              <MappingFragment StoreEntitySet="TB_PESSOA">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_TELEFONE">
+            <EntityTypeMapping TypeName="PessoaTelefoneModel.TB_TELEFONE">
+              <MappingFragment StoreEntitySet="TB_TELEFONE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
